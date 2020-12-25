@@ -23,6 +23,7 @@ const sleep = (msec: number) =>
     let usersListResponse: UsersListResponse;
 
     do {
+      await sleep(20);
       console.log(`[INFO] users.list APIを呼び出します。 cursor: ${cursor}`);
       usersListResponse = (await web.users.list({
         cursor,
