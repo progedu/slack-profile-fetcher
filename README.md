@@ -1,6 +1,6 @@
 # slack-profile-fetcher
 
-全ユーザーのカスタムプロフィール入りの JSON ファイル `user_profiles.json` を出力するスクリプト
+全ユーザーのカスタムプロフィール入りの JSON ファイル `members,json` と `user_profiles.json` を出力するスクリプト
 
 ### 使い方
 
