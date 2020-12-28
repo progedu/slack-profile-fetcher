@@ -41,8 +41,14 @@ const sleep = (msec: number) =>
       return;
     }
 
-    const outputFilename = 'user_profiles.json';
-    const userProfiles = [];
+    const outputMembersFilename = 'members.json';
+    fs.writeFileSync(outputMembersFilename, JSON.stringify(members));
+    console.log(
+      `[INFO] メンバー情報取得が終了しました。 ${outputMembersFilename} にて確認下さい。`
+    );
+
+    const outputProfileFilename = 'user_profiles.json';
+    const userProfiles = new Map();
     let counter = 1;
     for (const member of members) {
       await sleep(20);
@@ -55,12 +61,15 @@ const sleep = (msec: number) =>
       const usersProfileGetResponse = (await web.users.profile.get({
         user: member.id,
       })) as UsersProfileGetResponse;
-      userProfiles.push(usersProfileGetResponse);
+      userProfiles.set(member.id, usersProfileGetResponse);
 
-      fs.writeFileSync(outputFilename, JSON.stringify(userProfiles));
+      fs.writeFileSync(
+        outputProfileFilename,
+        JSON.stringify(Array.from(userProfiles))
+      );
     }
     console.log(
-      `[INFO] プロフィール情報取得が終了しました。 ${outputFilename} にて確認下さい。`
+      `[INFO] プロフィール情報取得が終了しました。 ${outputProfileFilename} にて確認下さい。`
     );
   } catch (err) {
     console.log(`[ERROR] エラーが発生しました。 err:`);
